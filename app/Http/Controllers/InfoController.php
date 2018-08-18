@@ -23,4 +23,8 @@ return view('prop.index');
    return view('auth.login');
 
     }
+    public function create(){
+
+        
+    }
 }
