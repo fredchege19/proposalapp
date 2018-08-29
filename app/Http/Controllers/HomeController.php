@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        Mail::to($user)->send(new proposalform($user));
         return view('home');
+        
     }
 }

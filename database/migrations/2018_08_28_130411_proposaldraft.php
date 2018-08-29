@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInfosTable extends Migration
+class Proposaldraft extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('infos', function (Blueprint $table) {
+        Schema::create('drafts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('organisation')->nullable();
@@ -27,8 +27,6 @@ class CreateInfosTable extends Migration
             $table->string('budget', 500);
             $table->boolean('accepted1')->default(0);
             $table->boolean('accepted2')->default(0);
-            $table->boolean('rejected')->default(0);
-            $table->boolean('new')->default(1);
 
             $table->timestamps();
         });
@@ -41,6 +39,6 @@ class CreateInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('infos');
+        //
     }
 }

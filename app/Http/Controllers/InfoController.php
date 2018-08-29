@@ -10,7 +10,10 @@ class InfoController extends Controller
 
         return view('infos.index');
     }
-    
+    public function admin(){
+        return view('admin.index');
+        
+            }
     public function prop(){
 return view('prop.index');
 
@@ -24,7 +27,11 @@ return view('prop.index');
 
     }
     public function create(){
-
-        
+    
     }
+    public function display(){
+        return view('admin.singleprop');
+     
+         }
+    
 }

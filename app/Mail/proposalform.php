@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class proposalform extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $user;
     /**
      * Create a new message instance.
      *
@@ -18,7 +18,7 @@ class proposalform extends Mailable
      */
     public function __construct()
     {
-        //
+        $this->user = $user;
     }
 
     /**
