@@ -3,7 +3,7 @@
         <p class="float-right">
           <a href="#">Back to top</a>
         </p>
-        <p>Glamespace Technologies &copy; Proposal Website</p>
+        <p>OneLove &copy; Proposal Website</p>
         
       </div>
     </footer>

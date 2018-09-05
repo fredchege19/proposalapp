@@ -1,15 +1,15 @@
 <?php
 
 
-Route::get('/', 'infocontroller@index');
-Route::get('/prop', 'infocontroller@prop');
-Route::get('/register', 'infocontroller@register');
-Route::get('/auth/login', 'infocontroller@login');
+Route::get('/', 'InfoController@index');
+Route::get('/prop', 'InfoController@prop');
+Route::get('/register', 'InfoController@register');
+Route::get('/auth/login', 'InfoController@login');
 
 Auth::routes();
 
 
-Route::get('users/{id}/proposal', 'infocontroller@submit');
+Route::get('users/{id}/proposal', 'InfoController@submit');
 Route::get('/admin','admincontroller@index');
 route::post('/login/custom',[
 'uses'=>'logincontroller@login',

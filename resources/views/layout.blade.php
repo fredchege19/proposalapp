@@ -27,7 +27,7 @@
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Glamespace Technologies Proposal Website</h1>
+          <h1 class="jumbotron-heading">OneLove Website</h1>
           <p class="lead text-muted">Hey, welcome to our website. This website will enable you to be able to post your work proposals
           . Remember to keep them short and brief. If your propossal is selected, we will call you upon submision deadline. You must have an account
           inorder to submit your proposal. Goodluck!</p>
