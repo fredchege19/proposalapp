@@ -5,6 +5,14 @@
     
    
         <h3 style="text-align:center;">Hey {{ Auth::user()->name }} , Please Fill The Fields And Submit The Data</h3>
+        @if(session()->has('notif'))
+<div class="row">
+<div class="alert alert-success">
+<button type="button" class="close" data-dismis="alert" aria-hidden="true">&times;</button>
+<strong>Notification: </strong>{{session()->get('notif')}}
+</div>
+</div>
+        @endif
         {!! Form::open(['url' => 'save']) !!}
         <div class="form-group">
         {{Form::label('title', 'Title')}}
