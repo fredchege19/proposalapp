@@ -49,16 +49,18 @@ class savecontroller extends Controller
             'background'    =>  $request->get('background'),
             'activities'    =>  $request->get('activities'),
             'background'    =>  $request->get('background'),
-            'budget'    =>  $request->get('budget')
+            'budget'    =>  $request->get('budget'),
             
         ]);
         $save->save();
-        return redirect()->route('home')->with('success', 'Data Added');
+     
+        return redirect()->route('success');
+        
     }
 
     /**
      * Display the specified resource.
-     *
+     * 
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -72,6 +74,15 @@ class savecontroller extends Controller
     {
         $proops = info::find($id);
         return view('home', compact('proops'));
+    }
+
+
+
+
+    public function success()
+    {
+        
+        return view('successful');
     }
 
 
