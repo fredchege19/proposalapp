@@ -19,10 +19,15 @@ return [
         'secret' => env('MAILGUN_SECRET'),
     ],
 
-    'mailgun' => [
-        'domain' => 'your-mailgun-domain',
-        'secret' => 'your-mailgun-key',
-    ],
+    'mailgun' => array(
+        'domain' => 'induction.ralphowino.com',
+        'secret' => 'key-aa209a740969fb1415ae1e797e85f162',
+    ),
+
+   /*  'mailgun' => [
+        'domain' => 'postmaster@induction.ralphowino.com',
+        'secret' => 'key-aa209a740969fb1415ae1e797e85f162',
+    ], */
 
     'ses' => [
         'key' => env('SES_KEY'),
