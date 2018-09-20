@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\info;
+use Auth;
+use Illuminate\Support\Facades\DB;
+use App\User;
+
 
 use Illuminate\Http\Request;
 
@@ -14,7 +18,9 @@ class savecontroller extends Controller
      */
     public function index()
     {
-        $props = info::where('new', 1)->get();
+        $props = info::where([['new',  1],
+  ['draft',  0]])->get();
+
         return view('admin.body', compact('props'));
         
     }
@@ -38,26 +44,76 @@ class savecontroller extends Controller
      */
     public function store(Request $request)
     {
-        $save = new Info([
-            'title'    =>  $request->get('title'),
-            'org_name'  =>  $request->get('org_name'),
-            'address'  =>  $request->get('address'),
-            'phone'    =>  $request->get('phone'),
-            'email'    =>  $request->get('email'),
-            'submitted_by' =>  $request->get('submitted_by'),
-            'summary'    =>  $request->get('summary'),
-            'background'    =>  $request->get('background'),
-            'activities'    =>  $request->get('activities'),
-            'background'    =>  $request->get('background'),
-            'budget'    =>  $request->get('budget'),
+      
+if ($request->has('save'))
+{
+    $save = new Info([
             
-        ]);
-        $save->save();
-     
-        return redirect()->route('success');
+        'user_Id'    =>  $request->get(Auth::user()->id),
+        'title'    =>  $request->get('title'),
+        'org_name'  =>  $request->get('org_name'),
+        'address'  =>  $request->get('address'),
+        'phone'    =>  $request->get('phone'),
+        'submitted_by'=>Auth::user()->name,
+        'email'=>Auth::user()->email,
+        'summary'    =>  $request->get('summary'),
+        'background'    =>  $request->get('background'),
+        'activities'    =>  $request->get('activities'),
+        'background'    =>  $request->get('background'),
+        'budget'    =>  $request->get('budget'),
+        'drafts'    =>  1,
         
-    }
+    ]);
+    
+    $user = Auth::user();
+    $save->draft =1;
+    $user->posts()->save($save);
+    return redirect()->route('success', Auth::user()->id);
+}
+else if ($request->has('publish'))
+{
+    $validatedData = $request->validate([
+    'title'    =>  'required|max:255',
+    
+    'address'  =>  'required',
+    'phone' => 'required|regex:/(0)[0-9]{9}/',
+   
+    'summary'    =>  'required|max:355',
+    'background'    =>  'required|max:355',
+    'activities'    =>  'required|max:355',
+    'background'    =>  'required|max:355',
+    'budget'    =>  'required|max:355',
+    
+    ]); 
 
+    $save = new Info([
+            
+        'user_Id'    =>  $request->get(Auth::user()->id),
+        'title'    =>  $request->get('title'),
+        'org_name'  =>  $request->get('org_name'),
+        'address'  =>  $request->get('address'),
+        'phone'    =>  $request->get('phone'),
+        'submitted_by'=>Auth::user()->name,
+        'email'=>Auth::user()->email,
+        'summary'    =>  $request->get('summary'),
+        'background'    =>  $request->get('background'),
+        'activities'    =>  $request->get('activities'),
+        'background'    =>  $request->get('background'),
+        'budget'    =>  $request->get('budget'),
+        'drafts'    =>  1,
+        
+    ]);
+    
+    $user = Auth::user();
+    $save->draft =0;
+    $user->posts()->save($save);
+    return redirect()->route('success', Auth::user()->id);
+
+
+}
+        }
+        
+  
     /**
      * Display the specified resource.
      * 
@@ -66,14 +122,19 @@ class savecontroller extends Controller
      */
     public function show($id)
     {
+        $proops = info::find($id);
+        return view('admin.singleprop', compact('proops'));
+    }
+    public function pop($id)
+    {
         $props = info::find($id);
-        return view('admin.singleprop', compact('props'));
+        return view('pop', compact('props'));
     }
 
     public function display($id)
     {
         $proops = info::find($id);
-        return view('home', compact('proops'));
+        return view('apply', compact('proops'));
     }
 
 
@@ -82,7 +143,12 @@ class savecontroller extends Controller
     public function success()
     {
         
-        return view('successful');
+        $proops = info::where([['draft',  0],
+  ['user_id',  Auth::user()->id]])->get();
+
+
+        return view('home', compact('proops'));
+        
     }
 
 
@@ -109,7 +175,7 @@ class savecontroller extends Controller
      $me=App\info::find($id);
       $me->accepted1 =1;
       $me->save();
-        return view('/dashboard');
+     return view('/dashboard');
 
     }
 
@@ -126,13 +192,51 @@ class savecontroller extends Controller
         $upd->new = '0';
         $upd->save();
         return redirect()->route('rejected');
-        
-       
-        
+
     }
-    public function decline($id)
+    public function submit($id)
     {
-        //
+        $upd = info::find($id);
+        $upd->draft = '0';
+     $upd->save();
+     return redirect()->route('home');
+
     }
+
+    public function newme()
+    {
+        return view('layouts.new_acc');
+
+    } 
+    public function view($id)
+    {
+        $prop = info::find($id);
+        return view('singleprop', compact('prop'));
+
+    }  
+
+    public function draftview($id)
+    {
+        $prop = info::find($id);
+        return view('singledraft', compact('prop'));
+
+    }  
     
+    public function verified()
+    {
+        return view('layouts.verified');
+    }
+
+
+    public function drafts()
+    {
+
+   $proops = info::where('draft',  1)->get();
+   return view('drafts', compact('proops'));
+            
+            }
+
+        
+        
+  
 }

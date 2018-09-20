@@ -9,10 +9,12 @@ class admincontroller extends Controller
     public function index(){
  return view('admin.index');
 
-    }
-    public function login(){
-        return view('home');
+    } 
+    
+    public function apply(){
+        return view('apply');
        
            }
+    
 
 }

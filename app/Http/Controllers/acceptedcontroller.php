@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\info;
 use Illuminate\Http\Request;
 use lluminate\Database\Query\Builder;
+use App\Http\Controllers\Auth;
 class acceptedcontroller extends Controller
 {
     /**
