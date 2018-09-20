@@ -7,10 +7,10 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class proposalform extends Mailable
+class Welcome extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user;
+
     /**
      * Create a new message instance.
      *
@@ -18,7 +18,7 @@ class proposalform extends Mailable
      */
     public function __construct()
     {
-        $this->user = $user;
+        //
     }
 
     /**
@@ -28,6 +28,6 @@ class proposalform extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.welcome');
+        return $this->markdown('emails.welcome');
     }
 }
