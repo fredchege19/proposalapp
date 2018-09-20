@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','token'
     ];
 
     /**
@@ -33,4 +33,20 @@ if($this->admin){
 }
 return false;
     }
+
+    public function posts()
+{
+    return $this->hasMany(info::class);
+}
+
+public function verified(){
+return $this->token===null;
+
+}
+
+public function verifyUser()
+    {
+        return $this->hasOne('App\VerifyUser');
+    }
+
 }
