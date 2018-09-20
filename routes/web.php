@@ -1,28 +1,43 @@
 <?php
 
 
-Route::get('/', 'InfoController@index');
+Route::get('/', 'InfoController@index')->name('start');
+Route::get('/drafts', 'savecontroller@drafts');
 Route::get('/prop', 'InfoController@prop');
 Route::get('/register', 'InfoController@register');
+Route::get('/submit/{id}', 'savecontroller@submit');
 Route::get('/auth/login', 'InfoController@login');
 Route::group(['middleware' => 'prevent-back-history'],function(){
     
-    Route::get('/success', 'savecontroller@success')->name('success');
+    Route::get('/success/{id}', 'savecontroller@success')->name('success');
   });
 
 Auth::routes();
-
-
+Route::get('/view/{id}', 'savecontroller@view');
+Route::get('/emailread', 'savecontroller@verified')->name('emailread');
+Route::get('/verified/{token}', 'verifycontroller@verify')->name('verified');
+Route::get('/verify/{token}', 'verifycontroller@verify');
 Route::get('users/{id}/proposal', 'InfoController@submit');
+Route::get('prop/{id}', 'savecontroller@pop');
 Route::get('/admin','admincontroller@index');
+Route::get('/viewd/{id}', 'savecontroller@draftview');
+Route::get('/drafts','savecontroller@drafts');
+Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
 route::post('/login/custom',[
 'uses'=>'logincontroller@login',
 'as' =>'login.custom' 
 ]);
 
+Route::get('/apply','admincontroller@apply');
 Route::group(['middleware'=>'auth'], function(){
-    Route::get('/home', 'admincontroller@login')->name('home');
     Route::get('/dashboard', 'savecontroller@index')->name('dashboard');
+    Route::get('/success', 'savecontroller@success')->name('home');
+    Route::get('protected',['middleware' => ['auth', 'admin'], function() {
+        
+        return redirect()->route('dashboard');
+        
+    }]);
+    Route::get('/new', 'savecontroller@newme')->name('notv');
 
 }
     );
@@ -45,3 +60,5 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/rejected/{id}', 'acceptedcontroller@gonethrough');
     Route::get('/deleted', 'acceptedcontroller@deleted')->name('rejected');
     Route::get('/rejected/{id}','acceptedcontroller@singlereject');
+
+  
