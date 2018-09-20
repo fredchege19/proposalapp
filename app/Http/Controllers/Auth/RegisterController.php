@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Notifications\VerifyEmail;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Mail\proposalform;
+
 class RegisterController extends Controller
 {
     /*
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/new';
 
     /**
      * Create a new controller instance.
@@ -39,7 +40,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
+   
     /**
      * Get a validator for an incoming registration request.
      *
@@ -61,19 +62,18 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(array $user)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ])
         
-        ;
-        
-        
+        $user= User::create([
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'password' => Hash::make($user['password']),
+            'token' => str_random(25),
+        ]);
 
-        
+      $user->notify(new VerifyEmail($user));
+        return $user;
+
     }
-    
 }
