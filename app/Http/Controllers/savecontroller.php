@@ -5,6 +5,8 @@ use App\info;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
+Use App\Mail\rejected;
+Use App\Mail\Submitted;
 
 
 use Illuminate\Http\Request;
@@ -74,10 +76,8 @@ else if ($request->has('publish'))
 {
     $validatedData = $request->validate([
     'title'    =>  'required|max:255',
-    
     'address'  =>  'required',
     'phone' => 'required|regex:/(0)[0-9]{9}/',
-   
     'summary'    =>  'required|max:355',
     'background'    =>  'required|max:355',
     'activities'    =>  'required|max:355',
@@ -103,12 +103,14 @@ else if ($request->has('publish'))
         'drafts'    =>  1,
         
     ]);
-    
+   $emal=Auth::user()->email;
     $user = Auth::user();
     $save->draft =0;
     $user->posts()->save($save);
+    \Mail::to($emal)->send(new Submitted);
     return redirect()->route('success', Auth::user()->id);
 
+    
 
 }
         }
@@ -122,8 +124,8 @@ else if ($request->has('publish'))
      */
     public function show($id)
     {
-        $proops = info::find($id);
-        return view('admin.singleprop', compact('proops'));
+        $props = info::find($id);
+        return view('admin.singleprop', compact('props'));
     }
     public function pop($id)
     {
@@ -191,6 +193,7 @@ else if ($request->has('publish'))
         $upd->rejected = '1';
         $upd->new = '0';
         $upd->save();
+        \Mail::to($upd)->send(new rejected);
         return redirect()->route('rejected');
 
     }
