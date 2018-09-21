@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\info;
+Use App\Mail\Accepted;
 use Illuminate\Http\Request;
 use lluminate\Database\Query\Builder;
 use App\Http\Controllers\Auth;
@@ -110,6 +111,7 @@ class acceptedcontroller extends Controller
         $upd->accepted1 = '0';
         $upd->new = '0';
         $upd->save();
+        \Mail::to($upd)->send(new Accepted);
         return redirect()->route('approved');
     }
     public function deleted()
