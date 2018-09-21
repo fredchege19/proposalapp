@@ -202,7 +202,7 @@ else if ($request->has('publish'))
         $upd = info::find($id);
         $upd->draft = '0';
       $upd->save();
-      \Mail::to($emal)->send(new Submitted);
+      \Mail::to($upd)->send(new Submitted);
      return redirect()->route('home');
 
     }
