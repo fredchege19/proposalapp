@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\info;
 Use App\Mail\Accepted;
+Use App\Mail\rejected;
 use Illuminate\Http\Request;
 use lluminate\Database\Query\Builder;
 use App\Http\Controllers\Auth;
@@ -102,6 +103,7 @@ class acceptedcontroller extends Controller
         $upd->rejected = '1';
         $upd->new = '0';
         $upd->save();
+        \Mail::to($upd)->send(new rejected);
         return redirect()->route('dashboard');
     }
     public function accepted($id)
