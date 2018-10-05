@@ -1,18 +1,32 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <a id="login-button" href="/login">Log In With GitHub</a>
+    
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld,
-  },
+
 };
 </script>
+
+<style>
+#login-button {
+  background-color: #3c4146;
+  color: #EEF4EC;
+  padding: 1em;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -100px;
+  margin-top: -1em;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 150px;
+  text-align: center;
+}
+</style>

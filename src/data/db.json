@@ -1,0 +1,21 @@
+{
+    "profiles": [
+        {"id": "21",
+        "name": "Kennedy waiguru", 
+        "Age": 25,
+        "Email": "fredchege19@gmail.com",
+        "Respositories": 70,
+        "City": "Kenya",
+        "Gender": "Female",
+        "Marital": "Married"
+    }
+    ],
+    "repositories": [
+        {"name":"ProposalApp", "date":"2/5/2018", "commit":"30days ago"},
+        {"name":"ProposalApp", "date":"2/5/2018", "commit":"30days ago"},
+        {"name":"ProposalApp", "date":"2/5/2018", "commit":"30days ago"},
+        {"name":"ProposalApp", "date":"2/5/2018", "commit":"30days ago"},
+        {"name":"ProposalApp", "date":"2/5/2018", "commit":"30days ago"},
+        {"name":"ProposalApp", "date":"2/5/2018", "commit":"30days ago"}
+      ]
+  }
